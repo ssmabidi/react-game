@@ -2,3 +2,22 @@
 	display:inline-block;
 	height:24px;
 }
+
+.box{
+	margin:auto;
+	width:240px;
+}
+
+.buttons{
+	width:200px; 
+	margin:auto; 
+
+	margin-top:80px;
+	display:none;
+}
+
+@media screen and (max-width: 480px) {
+  .buttons{
+  	display:block;
+  }
+}

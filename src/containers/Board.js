@@ -20,9 +20,10 @@ class App extends React.Component {
 
   move(val){
     let nextType = this.nextBlockType(this.state.playerPos, val);
-    let secondNextType = this.nextBlockType({...this.state.playerPos, x : this.state.playerPos.x - 1}, val);
+    let secondNextType;
     switch (val) {
       case 'left':
+        secondNextType = this.nextBlockType({...this.state.playerPos, x : this.state.playerPos.x - 1}, val);
         if(nextType == 4 || nextType == 1){
           this.setState((prevstate) => ({
             playerPos : {x: prevstate.playerPos.x - 1, y:prevstate.playerPos.y}
@@ -55,17 +56,104 @@ class App extends React.Component {
           break;
         }
       case 'up':
-        //console.log(this.nextBlockType(this.state.playerPos, val))
-        this.setState((prevstate) => ({playerPos : {x: prevstate.playerPos.x, y:prevstate.playerPos.y - 1}}))
-        break;
+        secondNextType = this.nextBlockType({...this.state.playerPos, y : this.state.playerPos.y - 1}, val);
+        if(nextType == 4 || nextType == 1){
+          this.setState((prevstate) => ({
+            playerPos : {x: prevstate.playerPos.x, y:prevstate.playerPos.y - 1}
+          }))
+          break;
+        }
+        if(nextType == 2){
+          if(secondNextType == 0 || secondNextType == 2){
+            this.setState((prevstate) => ({
+              playerPos : {x: prevstate.playerPos.x, y:prevstate.playerPos.y},
+            }))
+            break;
+          }
+          if(secondNextType == 4 || secondNextType == 1){
+            let newBoard = this.state.board;
+            newBoard[this.state.playerPos.y - 1][this.state.playerPos.x] = 4;
+            newBoard[this.state.playerPos.y - 2][this.state.playerPos.x] = 2;
+            this.setState((prevstate) => ({
+              playerPos : {x: prevstate.playerPos.x, y:prevstate.playerPos.y - 1},
+              board:newBoard,
+              collected:secondNextType == 1 ? prevstate.collected + 1 : prevstate.collected
+            }))
+          }
+          break;
+        }
+        if(nextType == 0){
+          this.setState((prevstate) => ({
+            playerPos : {x: prevstate.playerPos.x, y:prevstate.playerPos.y}
+          }))
+          break;
+        }
       case 'right':
-        //console.log(this.nextBlockType(this.state.playerPos, val))
-        this.setState((prevstate) => ({playerPos : {x: prevstate.playerPos.x + 1, y:prevstate.playerPos.y}}))
-        break;
+        secondNextType = this.nextBlockType({...this.state.playerPos, x : this.state.playerPos.x + 1}, val);
+        if(nextType == 4 || nextType == 1){
+          this.setState((prevstate) => ({
+            playerPos : {x: prevstate.playerPos.x + 1, y:prevstate.playerPos.y}
+          }))
+          break;
+        }
+        if(nextType == 2){
+          if(secondNextType == 0 || secondNextType == 2){
+            this.setState((prevstate) => ({
+              playerPos : {x: prevstate.playerPos.x, y:prevstate.playerPos.y},
+            }))
+            break;
+          }
+          if(secondNextType == 4 || secondNextType == 1){
+            let newBoard = this.state.board;
+            newBoard[this.state.playerPos.y][this.state.playerPos.x + 1] = 4;
+            newBoard[this.state.playerPos.y][this.state.playerPos.x + 2] = 2;
+            this.setState((prevstate) => ({
+              playerPos : {x: prevstate.playerPos.x + 1, y:prevstate.playerPos.y},
+              board:newBoard,
+              collected:secondNextType == 1 ? prevstate.collected + 1 : prevstate.collected
+            }))
+          }
+          break;
+        }
+        if(nextType == 0){
+          this.setState((prevstate) => ({
+            playerPos : {x: prevstate.playerPos.x, y:prevstate.playerPos.y}
+          }))
+          break;
+        }
       case 'down':
-        //console.log(this.nextBlockType(this.state.playerPos, val))
-        this.setState((prevstate) => ({playerPos : {x: prevstate.playerPos.x, y:prevstate.playerPos.y + 1}}))
-        break;
+        secondNextType = this.nextBlockType({...this.state.playerPos, y : this.state.playerPos.y + 1}, val);
+        if(nextType == 4 || nextType == 1){
+          this.setState((prevstate) => ({
+            playerPos : {x: prevstate.playerPos.x, y:prevstate.playerPos.y + 1}
+          }))
+          break;
+        }
+        if(nextType == 2){
+          if(secondNextType == 0 || secondNextType == 2){
+            this.setState((prevstate) => ({
+              playerPos : {x: prevstate.playerPos.x, y:prevstate.playerPos.y},
+            }))
+            break;
+          }
+          if(secondNextType == 4 || secondNextType == 1){
+            let newBoard = this.state.board;
+            newBoard[this.state.playerPos.y + 1][this.state.playerPos.x] = 4;
+            newBoard[this.state.playerPos.y + 2][this.state.playerPos.x] = 2;
+            this.setState((prevstate) => ({
+              playerPos : {x: prevstate.playerPos.x, y:prevstate.playerPos.y + 1},
+              board:newBoard,
+              collected:secondNextType == 1 ? prevstate.collected + 1 : prevstate.collected
+            }))
+          }
+          break;
+        }
+        if(nextType == 0){
+          this.setState((prevstate) => ({
+            playerPos : {x: prevstate.playerPos.x, y:prevstate.playerPos.y}
+          }))
+          break;
+        }
     }
   }
 
@@ -107,11 +195,27 @@ class App extends React.Component {
     
     this.state
     return(
-      <BoardComponent 
-        field={this.state.board}
-        playerPos={this.state.playerPos}
-        collected={this.state.collected}
-      />
+      <div>
+        <BoardComponent 
+          field={this.state.board}
+          playerPos={this.state.playerPos}
+          collected={this.state.collected}
+        />
+        <div className="buttons">
+          <button onClick={() => {
+            this.move('left')
+          }}>left</button>
+          <button onClick={() => {
+            this.move('up')
+          }}>up</button>
+          <button onClick={() => {
+            this.move('right')
+          }}>right</button>
+          <button onClick={() => {
+            this.move('down')
+          }}>down</button>
+        </div>
+      </div>
     );
   }
 }

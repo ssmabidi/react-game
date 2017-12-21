@@ -1,10 +1,22 @@
 import React from 'react'
 
 const BoardComponent = (props) => {
+	let completed = 0;
+	props.field.forEach((el) => {
+		el.forEach((item) => {
+			if(item == 1){
+				completed++;
+			}
+		})
+	})
+
+	if(completed == 0){
+		return <span style={{fontSize:'40px'}}>YOU WIN! YOU WIN! YOU WIN! YOU WIN! YOU WIN!</span>
+	}
+
 	let key = 1;
 	let field = props.field.map((item, q) => {
 		let rows = item.map((el, p) => {
-			
 			return (
 				<div className="element" key={key++}>
 					<img src={
@@ -21,9 +33,9 @@ const BoardComponent = (props) => {
 		return rows
 	})
 	return (
-		<div>
+		<div className="box">
 			{field}
-			<span>collected dots:{props.collected}</span>
+			<span>collected grapes:{props.collected}</span>
 		</div>
 	)
 }
