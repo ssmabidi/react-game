@@ -1,6 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import Game from './game';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import App from './App'
+import "./css/styles.css"
 
-ReactDOM.render(<Game />, document.getElementById('root'));
+ReactDOM.render((
+    <App />
+), document.getElementById('root'))
+
+
+if (module.hot) {
+  module.hot.accept();
+}
