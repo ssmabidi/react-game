@@ -10,10 +10,6 @@ const BoardComponent = (props) => {
 		})
 	})
 
-	if(completed == 0){
-		return <span style={{fontSize:'40px'}}>YOU WIN! YOU WIN! YOU WIN! YOU WIN! YOU WIN!</span>
-	}
-
 	let key = 1;
 	let field = props.field.map((item, q) => {
 		let rows = item.map((el, p) => {
@@ -36,6 +32,7 @@ const BoardComponent = (props) => {
 		<div className="box">
 			{field}
 			<span>collected grapes:{props.collected}</span>
+			{completed == 0 && <div style={{fontSize:'20px'}}>YOU WIN! YOU WIN! YOU WIN! YOU WIN! YOU WIN!</div>}
 		</div>
 	)
 }
