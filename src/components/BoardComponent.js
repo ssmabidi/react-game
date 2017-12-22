@@ -1,4 +1,10 @@
 import React from 'react'
+import Timer from './Timer'
+
+const stop = () => {
+	document.onkeydown = () => {
+	}
+}
 
 const BoardComponent = (props) => {
 	let completed = 0;
@@ -28,13 +34,24 @@ const BoardComponent = (props) => {
 		rows.push(<br />)
 		return rows
 	})
+
+	if(completed == 0){
+		stop();
+	}
+
+	const OPTIONS = { prefix: 'seconds elapsed!', delay: 100} 
 	return (
 		<div className="box">
 			{field}
-			<span>collected grapes:{props.collected}</span>
+			<span>Collected grapes: {props.collected} <br /></span>
+			<span> Moves: {props.moves}</span>
+			<Timer stop={completed == 0 ? true : false} options={OPTIONS}/>
+			
 			{completed == 0 && <div style={{fontSize:'20px'}}>YOU WIN! YOU WIN! YOU WIN! YOU WIN! YOU WIN!</div>}
 		</div>
 	)
 }
+
+
 
 export default BoardComponent

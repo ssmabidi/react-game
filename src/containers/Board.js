@@ -11,7 +11,8 @@ class App extends React.Component {
         x:0,
         y:0
       },
-      collected:0
+      collected:0,
+      moves:0
     }
 
     this.move = this.move.bind(this);
@@ -26,7 +27,8 @@ class App extends React.Component {
         secondNextType = this.nextBlockType({...this.state.playerPos, x : this.state.playerPos.x - 1}, val);
         if(nextType == 4 || nextType == 1){
           this.setState((prevstate) => ({
-            playerPos : {x: prevstate.playerPos.x - 1, y:prevstate.playerPos.y}
+            playerPos : {x: prevstate.playerPos.x - 1, y:prevstate.playerPos.y},
+            moves: prevstate.moves + 1
           }))
           break;
         }
@@ -44,7 +46,8 @@ class App extends React.Component {
             this.setState((prevstate) => ({
               playerPos : {x: prevstate.playerPos.x - 1, y:prevstate.playerPos.y},
               board:newBoard,
-              collected:secondNextType == 1 ? prevstate.collected + 1 : prevstate.collected
+              collected:secondNextType == 1 ? prevstate.collected + 1 : prevstate.collected,
+              moves: prevstate.moves + 1
             }))
           }
           break;
@@ -59,7 +62,8 @@ class App extends React.Component {
         secondNextType = this.nextBlockType({...this.state.playerPos, y : this.state.playerPos.y - 1}, val);
         if(nextType == 4 || nextType == 1){
           this.setState((prevstate) => ({
-            playerPos : {x: prevstate.playerPos.x, y:prevstate.playerPos.y - 1}
+            playerPos : {x: prevstate.playerPos.x, y:prevstate.playerPos.y - 1},
+            moves: prevstate.moves + 1
           }))
           break;
         }
@@ -77,7 +81,8 @@ class App extends React.Component {
             this.setState((prevstate) => ({
               playerPos : {x: prevstate.playerPos.x, y:prevstate.playerPos.y - 1},
               board:newBoard,
-              collected:secondNextType == 1 ? prevstate.collected + 1 : prevstate.collected
+              collected:secondNextType == 1 ? prevstate.collected + 1 : prevstate.collected,
+              moves: prevstate.moves + 1
             }))
           }
           break;
@@ -92,7 +97,8 @@ class App extends React.Component {
         secondNextType = this.nextBlockType({...this.state.playerPos, x : this.state.playerPos.x + 1}, val);
         if(nextType == 4 || nextType == 1){
           this.setState((prevstate) => ({
-            playerPos : {x: prevstate.playerPos.x + 1, y:prevstate.playerPos.y}
+            playerPos : {x: prevstate.playerPos.x + 1, y:prevstate.playerPos.y},
+            moves: prevstate.moves + 1
           }))
           break;
         }
@@ -110,7 +116,8 @@ class App extends React.Component {
             this.setState((prevstate) => ({
               playerPos : {x: prevstate.playerPos.x + 1, y:prevstate.playerPos.y},
               board:newBoard,
-              collected:secondNextType == 1 ? prevstate.collected + 1 : prevstate.collected
+              collected:secondNextType == 1 ? prevstate.collected + 1 : prevstate.collected,
+              moves: prevstate.moves + 1
             }))
           }
           break;
@@ -125,7 +132,8 @@ class App extends React.Component {
         secondNextType = this.nextBlockType({...this.state.playerPos, y : this.state.playerPos.y + 1}, val);
         if(nextType == 4 || nextType == 1){
           this.setState((prevstate) => ({
-            playerPos : {x: prevstate.playerPos.x, y:prevstate.playerPos.y + 1}
+            playerPos : {x: prevstate.playerPos.x, y:prevstate.playerPos.y + 1},
+            moves: prevstate.moves + 1
           }))
           break;
         }
@@ -143,7 +151,8 @@ class App extends React.Component {
             this.setState((prevstate) => ({
               playerPos : {x: prevstate.playerPos.x, y:prevstate.playerPos.y + 1},
               board:newBoard,
-              collected:secondNextType == 1 ? prevstate.collected + 1 : prevstate.collected
+              collected:secondNextType == 1 ? prevstate.collected + 1 : prevstate.collected,
+              moves: prevstate.moves + 1
             }))
           }
           break;
@@ -192,14 +201,13 @@ class App extends React.Component {
   }
 
   render() {
-    
-    this.state
     return(
       <div>
         <BoardComponent 
           field={this.state.board}
           playerPos={this.state.playerPos}
           collected={this.state.collected}
+          moves={this.state.moves}
         />
         <div className="buttons">
           <button onClick={() => {
